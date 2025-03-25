@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Page</title>
+</head>
+<body>
+    <h1>Purchase Product</h1>
+    <button id="payButton">Pay Now</button>
+
+    <script>
+        document.getElementById('payButton').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/create-checkout', { method: 'POST' });
+                const data = await response.json();
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                } else {
+                    alert('Failed to initiate payment.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred.');
+            }
+        });
+    </script>
+</body>
+</html>
